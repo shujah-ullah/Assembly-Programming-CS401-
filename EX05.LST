@@ -1,0 +1,15 @@
+     1                                  ; Register INDIRECT Addressing 
+     2                                  ; a program to add three nos using indirect addressing
+     3                                  
+     4                                  [org 0x0100]
+     5 00000000 BB[1C00]                	mov bx, num   ; point bx to first no. note label num isn,t surrounded by [] means that bx contains adress of label num not its data  
+     6 00000003 8B07                    	mov ax , [bx]      ; load first no to ax
+     7 00000005 81C30200                	add bx , 2          ; point bx to second number 
+     8 00000009 0307                    	add ax , [bx]      ; [] will take data at given index
+     9 0000000B 81C30200                	add bx , 2         ; point bx to third number
+    10 0000000F 0307                    	add ax , [bx]
+    11 00000011 81C30200                	add bx, 2         ; bx now pointing to last no
+    12 00000015 8907                    	mov [bx], ax     ; store sum to num+6
+    13 00000017 B8004C                  mov ax, 0x4c00
+    14 0000001A CD21                    int 0x21
+    15 0000001C 05000A000F000000        num: 	dw   5,  10,  15,  0 

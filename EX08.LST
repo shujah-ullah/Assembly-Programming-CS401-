@@ -1,0 +1,20 @@
+     1                                  ; Indirect Register + Offset Addressing
+     2                                  ; a program to add ten numbers wihtout a seperate counter
+     3                                  [org 0x0100]
+     4 00000000 BB0000                  	mov bx, 0       ; initialize array index to zero
+     5 00000003 B80000                  	mov ax, 0       ; initialize sum with zero
+     6                                  
+     7 00000006 0387[1C00]              label: 	add  ax,  [num+bx]   ; add number to ax, bx act as adress index incrementer
+     8 0000000A 81C30200                	add  bx , 2       ; reposition bx to next no
+     9 0000000E 81FB1400                	cmp bx,  20;    ; are we beyond the last index
+    10 00000012 75F2                    	jne   label	      ; jump program counter IP to label and start executing program from there.
+    11                                  	
+    12 00000014 A3[3000]                	mov [total], ax   ; write back sum in memory
+    13                                  	
+    14 00000017 B8004C                  	mov ax, 0x4c00
+    15 0000001A CD21                    	int 0x21
+    16                                  
+    17 0000001C 0A0014001E00280032-     num: 	dw  10, 20, 30, 40, 50, 60, 70, 80, 90, 100 
+    18 00000025 003C00460050005A00-
+    19 0000002E 6400               
+    20 00000030 0000                    total:	dw   0

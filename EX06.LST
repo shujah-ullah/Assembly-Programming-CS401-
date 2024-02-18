@@ -1,0 +1,21 @@
+     1                                  ; INDIRECT ADDRESSING 
+     2                                  ; a program to add ten numbers
+     3                                  [org 0x0100]
+     4 00000000 BB[1D00]                	mov bx, num  ; point bx to first no
+     5 00000003 B90A00                  	mov cx, 10     ; load count in cx for looping
+     6 00000006 B80000                  	mov ax, 0       ; initialize sum with zero
+     7                                  
+     8 00000009 0307                    label: 	add ax,  [bx]   ; add whatever is at bx to ax
+     9 0000000B 81C30200                	add bx , 2       ; reposition bx to next no
+    10 0000000F 81E90100                	sub cx, 1        ; decrement count by 1
+    11 00000013 75F4                    	jnz label	      ; jump program counter IP to label and start executing program from there, continue untill zero flag isnt set.
+    12                                  	
+    13 00000015 A3[3100]                	mov [total], ax   ; write back sum in memory
+    14                                  	
+    15 00000018 B8004C                  	mov ax, 0x4c00
+    16 0000001B CD21                    	int 0x21
+    17                                  
+    18 0000001D 0A0014001E00280032-     num: 	dw  10, 20, 30, 40, 50, 60, 70, 80, 90, 100 
+    19 00000026 003C00460050005A00-
+    20 0000002F 6400               
+    21 00000031 0000                    total:	dw   0

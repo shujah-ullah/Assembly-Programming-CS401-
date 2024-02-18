@@ -1,0 +1,24 @@
+     1                                  ; multiplication of 4 bit no
+     2                                  [org 0x100]
+     3                                  
+     4 00000000 E90300                  	jmp   start
+     5 00000003 0D                      multiplicant:  db  13
+     6 00000004 05                      multiplier	 :  db   5
+     7 00000005 00                      result	 :  db   0
+     8                                  
+     9 00000006 B104                    start:	mov cl,  4    		  ;initialize counter
+    10 00000008 A0[0300]                	mov al,  [multiplicant]   	  ; load multiplicant
+    11 0000000B 8A1E[0400]              	mov bl,  [multiplier] 	 	  ; load multiplier
+    12                                  
+    13 0000000F D0EB                    checkbit:	shr   bl,  1       	 	 ; mov right most bit of multiplier right
+    14 00000011 7304                    	jnc   skip	              	 	 ; mov to skip section if moved bit isnt 1
+    15 00000013 0006[0500]              	add [result], al  		 ;accumulate multiplicand to result if carry bit is 1
+    16                                  
+    17 00000017 D0E0                    skip:	shl   al,  1 		 ; mov multiplicant 1 bit left if carry is zero
+    18 00000019 FEC9                    	dec    cl                  		 ; decrement counter register 
+    19 0000001B 75F2                    	jnz  checkbit		 ; repeat loop from  start section if counter isnt zero
+    20                                  
+    21 0000001D B8004C                  mov  ax,  0x4c00
+    22 00000020 CD21                    int  0x21
+    23                                  	
+    24                                  

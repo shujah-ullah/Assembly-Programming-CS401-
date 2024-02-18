@@ -1,0 +1,21 @@
+     1                                  ; program to swap every pair of bits in the AX register. 
+     2                                  [org 0x100]
+     3                                  
+     4 00000000 B85555                  mov ax, 0x5555
+     5 00000003 B90800                  mov cx , 8
+     6                                  
+     7                                  loop_start
+     8 00000006 89C3                    	mov bx, ax
+     9 00000008 D1C0                    	rol  ax,  1
+    10 0000000A D1CB                    	ror bx,   1
+    11 0000000C 25AAAA                  	and  ax,  0xaaaa
+    12 0000000F 81E35555                	and  bx,  0x5555
+    13 00000013 09D8                    	or ax,  bx
+    14 00000015 E2EF                    loop loop_start
+    15                                  
+    16 00000017 B8004C                  mov ax, 0x4c00
+    17 0000001A CD21                    int 0x21
+    18                                  
+    19                                  
+    20                                  
+    21                                  		
